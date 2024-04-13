@@ -1,0 +1,23 @@
+faculty
+specialty
+student (faculty)
+teacher
+grades (teacher, student, specialty)
+discipline (specialty)
+teachers_disciplines
+
+php artisan make:model Student -cmsr
+php artisan make:model Faculty -cmsr
+php artisan make:model Specialty -cmsr
+php artisan make:model Teacher -cmsr
+php artisan make:model Grade -cmsr
+php artisan make:model Discipline -cmsr
+php artisan make:model Group -cmsr
+php artisan make:model Stream -cmsr
+
+
+//remigrate
+php artisan migrate:fresh
+
+//seed
+php artisan db:seed
