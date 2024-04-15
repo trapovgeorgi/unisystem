@@ -15,10 +15,17 @@ class CreateStudentsTable extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
+
+            $table->string('api_token', 80)
+                ->unique()
+                ->nullable()
+                ->default(null);
+
             $table->string("name", 255);
             $table->string("facnum", 9);
             $table->string("egn", 10);
             $table->string("mail", 255);
+            $table->integer("semester");
             $table->enum("eqd", ["Бакалавър", "Магистър", "Доктор"]);
             $table->enum("eqd_type", ["Редовно", "Задочно"]);
             $table->enum("state", ["Действащ", "Прекъснал"]);

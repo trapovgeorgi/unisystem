@@ -1,34 +1,42 @@
-import { Button, StatusBar, StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 import Input from "../components/form/Input";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
-import axios from "axios";
+import { useApi } from "../api/useApi";
 
 export default function LoginScreen(props) {
-	const [auth, setAuth] = useContext(AuthContext);
+	const [, setAuth] = useContext(AuthContext);
 
-	const [username, setUsername] = useState("mitko");
-	const [password, setPassword] = useState("mitko");
+	const [facnum, setFacnum] = useState("111111111");
+	const [egn, setEgn] = useState("0000000000");
 	const [error, setError] = useState(null);
 
+	const api = useApi();
+
 	async function login() {
-		const url = "http://192.168.123.108:8000/login";
-		const isUserOk = (await axios.post(url, { username, password })).data;
+		let userToken = {};
+		try {
+			userToken = (await api.post("/login", { facnum, egn })).data;
+		} catch (error) {
+			setError("Няма Връзка с Бекенд");
+			console.error(error);
+			return;
+		}
 
-		console.log(isUserOk);
-
-		if (isUserOk == true) setAuth(username);
-		else {
+		if (userToken == false) {
 			setError("Грешно Име или Парола");
+		}
+		if (userToken.length == 80) {
+			setAuth(userToken);
 		}
 	}
 
 	return (
 		<View style={styles.container}>
-			{error ? <Text style={{color: "red"}}>{error}</Text> : <></>}
+			{error ? <Text style={{ color: "red" }}>{error}</Text> : <></>}
 
-			<Input title={"Име"} onChangeText={(t) => setUsername(t)} />
-			<Input title={"Парола"} onChangeText={(t) => setPassword(t)} secureTextEntry />
+			<Input title={"Име"} onChangeText={(t) => setFacnum(t)} defaultValue={facnum} />
+			<Input title={"Парола"} onChangeText={(t) => setEgn(t)} defaultValue={egn} secureTextEntry />
 			<Button title="Вход" color={"black"} onPress={login} />
 		</View>
 	);

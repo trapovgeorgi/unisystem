@@ -2,11 +2,10 @@ import { useState } from "react";
 import { Text, TextInput, StyleSheet, View } from "react-native";
 
 export default function Input(props) {
-	const [val, setVal] = useState("");
 	return (
 		<View style={styles.view}>
 			<Text>{props.title}</Text>
-			<TextInput style={styles.input} onChangeText={props.onChangeText} secureTextEntry={props.secureTextEntry}/>
+			<TextInput style={styles.input} onChangeText={props.onChangeText} secureTextEntry={props.secureTextEntry} defaultValue={props.defaultValue}/>
 		</View>
 	);
 }

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
     protected $guarded = [];
-    protected $fillable = ["id","name", "facnum", "egn", "mail", "eqd","eqd_type", "state", "group_id"];
+    protected $fillable = ["id", "api_token", "name", "facnum", "egn", "mail", "eqd", "eqd_type", "state", "group_id"];
 
     use HasFactory;
 }
