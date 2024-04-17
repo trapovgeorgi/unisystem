@@ -1,8 +1,10 @@
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, Image, View } from "react-native";
 import Input from "../components/form/Input";
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useApi } from "../api/useApi";
+
+const tuLogo = require('../assets/TUSlogosimple.png');
 
 export default function LoginScreen(props) {
 	const [, setAuth] = useContext(AuthContext);
@@ -32,12 +34,13 @@ export default function LoginScreen(props) {
 	}
 
 	return (
+		
 		<View style={styles.container}>
 			{error ? <Text style={{ color: "red" }}>{error}</Text> : <></>}
-
+			<Image source={tuLogo} style = { styles.img} ></Image>
 			<Input title={"Име"} onChangeText={(t) => setFacnum(t)} defaultValue={facnum} />
 			<Input title={"Парола"} onChangeText={(t) => setEgn(t)} defaultValue={egn} secureTextEntry />
-			<Button title="Вход" color={"black"} onPress={login} />
+			<Button title="Вход" color={"#3352A8"} onPress={login} />
 		</View>
 	);
 }
@@ -53,4 +56,8 @@ const styles = StyleSheet.create({
 	text: {
 		color: "white",
 	},
+	img : {
+		width : 250,
+		height : 250,
+	}
 });

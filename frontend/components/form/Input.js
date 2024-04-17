@@ -1,11 +1,13 @@
-import { useState } from "react";
-import { Text, TextInput, StyleSheet, View } from "react-native";
+import {TextInput, StyleSheet, View} from "react-native";
 
 export default function Input(props) {
 	return (
 		<View style={styles.view}>
-			<Text>{props.title}</Text>
-			<TextInput style={styles.input} onChangeText={props.onChangeText} secureTextEntry={props.secureTextEntry} defaultValue={props.defaultValue}/>
+			<TextInput style={styles.input} 
+				onChangeText={props.onChangeText}
+				secureTextEntry={props.secureTextEntry}
+				defaultValue={props.defaultValue} 
+				placeholder={props.title}/>
 		</View>
 	);
 }
@@ -14,14 +16,18 @@ const styles = StyleSheet.create({
 	view: {
 		display: "flex",
 		flexDirection: "column",
-		width: 160,
+		alignContent: "center",
+		justifyContent: "center",
+		alignItems: "center",
+		width: 250,
 	},
 	text: {},
 	input: {
-		borderBottomColor: "black",
-		borderStyle: "solid",
-        borderWidth: 2,
-        height: 40,
-        paddingHorizontal: 10
+		borderColor: "#fff",
+		borderBottomColor: "gray",
+		borderWidth: 3,
+		height: 40,
+		backgroundColor: "#fff",
+		placeholder: "#ccc"
 	},
 });
