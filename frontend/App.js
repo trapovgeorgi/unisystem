@@ -27,7 +27,20 @@ export default function App() {
 						</>
 					) : (
 						<>
-							<Drawer.Screen name="Login" component={LoginScreen} />
+							<Drawer.Screen name="Login"
+								component={LoginScreen}
+								options={{
+									title: 'Login',
+									headerStyle: {
+										backgroundColor: '#3352A8',
+									},
+									headerTintColor: '#fff',
+									headerTitleStyle: {
+										fontWeight: 'bold',
+									},
+								
+								}}
+							/>
 						</>
 					)}
 				</Drawer.Navigator>
