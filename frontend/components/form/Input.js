@@ -28,6 +28,5 @@ const styles = StyleSheet.create({
 		borderWidth: 3,
 		height: 40,
 		backgroundColor: "#fff",
-		placeholder: "#ccc"
 	},
 });

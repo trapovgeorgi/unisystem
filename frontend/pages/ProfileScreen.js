@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Image, Text, View, StyleSheet, ImageBackground, ScrollView } from "react-native";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
@@ -13,7 +13,6 @@ export default function ProfileScreen() {
 		try {
 			const data = await (await api.get("/profile")).data;
 			setStudent(data);
-			console.log(data);
 		} catch (error) {
 			console.error(error);
 		}
@@ -24,14 +23,11 @@ export default function ProfileScreen() {
 
 	return (
 		<View>
-			<View style={styles.imageContainer}>
-				<Text>{student?.name}</Text>
-				<Image
-					style={styles.profileImage}
-					source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm4KhpibH4AV0m8rOVog8YexsZhczYZ38CavwR9ecvjQ&s" }}
-				/>
-			</View >
 			<ScrollView>
+				<View style={styles.imageContainer}>
+					<Text>{student?.name}</Text>
+					<Image style={styles.profileImage} source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm4KhpibH4AV0m8rOVog8YexsZhczYZ38CavwR9ecvjQ&s" }} />
+				</View>
 				<View style={styles.infoContainer}>
 					<Text style={styles.info}> ОКС: {student?.eqd}</Text>
 					<Text style={styles.info}>Факултетен номер: {student?.facnum}</Text>
@@ -46,17 +42,15 @@ export default function ProfileScreen() {
 			</ScrollView>
 		</View>
 	);
-
 }
 const styles = StyleSheet.create({
 	infoContainer: {
- 		width: "100%",
+		width: "100%",
 		backgroundColor: "#fff",
 		alignItems: "center",
 		justifyContent: "space-between",
 		padding: 50,
 		rowGap: 30,
-
 	},
 	text: {
 		color: "white",
@@ -82,9 +76,6 @@ const styles = StyleSheet.create({
 		borderWidth: 3,
 		backgroundColor: "#fff",
 		paddingHorizontal: 0,
-		backgroundColor: '#EEE',
-
+		backgroundColor: "#EEE",
 	},
-
-
 });

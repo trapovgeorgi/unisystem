@@ -6,7 +6,7 @@ export function useApi() {
 	const [auth, setAuth] = useContext(AuthContext);
 
 	const api = axios.create({
-		baseURL: "http://192.168.10.173:8000",
+		baseURL: "http://192.168.123.109:8000",
 	});
 
 	api.interceptors.request.use(
