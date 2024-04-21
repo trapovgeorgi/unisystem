@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStudentsTable extends Migration
+class CreateUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateStudentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('students', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->id();
 
             $table->string('api_token', 80)
@@ -21,20 +21,26 @@ class CreateStudentsTable extends Migration
                 ->nullable()
                 ->default(null);
 
+            $table->text('push_token')
+                ->nullable()
+                ->default(null);
+
             $table->string("name", 255);
             $table->string("facnum", 9);
             $table->string("egn", 10);
             $table->string("mail", 255);
-            $table->integer("semester");
-            $table->enum("eqd", ["Бакалавър", "Магистър", "Доктор"]);
-            $table->enum("eqd_type", ["Редовно", "Задочно"]);
-            $table->enum("state", ["Действащ", "Прекъснал"]);
+            $table->integer("semester")->nullable();
+            $table->enum("eqd", ["Бакалавър", "Магистър", "Доктор"])->nullable();
+            $table->enum("eqd_type", ["Редовно", "Задочно"])->nullable();
+            $table->enum("state", ["Действащ", "Прекъснал"])->nullable();
+            $table->enum("role", ["student", "teacher"])->nullable();
 
             $table->foreignId('group_id')
+                ->nullable()
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-
+                
             $table->timestamps();
         });
     }
@@ -46,6 +52,6 @@ class CreateStudentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('students');
+        Schema::dropIfExists('users');
     }
 }

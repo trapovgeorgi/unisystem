@@ -19,11 +19,16 @@ class CreateGradesTable extends Migration
             $table->boolean("verified");
 
             $table->foreignId('student_id')
-                ->constrained()
+                ->constrained("users")
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
             $table->foreignId('teacher_id')
+                ->constrained("users")
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table->foreignId('discipline_id')
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');

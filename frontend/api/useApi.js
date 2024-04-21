@@ -6,12 +6,12 @@ export function useApi() {
 	const [auth, setAuth] = useContext(AuthContext);
 
 	const api = axios.create({
-		baseURL: "http://192.168.123.109:8000",
+		baseURL: "http://192.168.123.106:8000",
 	});
 
 	api.interceptors.request.use(
 		(config) => {
-			const token = auth;
+			const token = auth?.api_token;
 			if (token) {
 				config.headers.Authorization = `Bearer ${token}`;
 			}
