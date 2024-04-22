@@ -3,3 +3,5 @@ cd /mnt/c/Users/gogo/Desktop/"TU 2024 SEM 6"/unisystem/frontend
 
 export ANDROID_HOME=$HOME/Android/Sdk
 export PATH=$PATH:$ANDROID_HOME/tools
+
+npx expo run:android --variant release

@@ -10,6 +10,7 @@ import * as Notifications from "expo-notifications";
 
 import { getAuthNavigator } from "./components/AuthNavigator";
 import { registerForPushNotificationsAsync } from "./api/notifications";
+import { StatusBar } from "expo-status-bar";
 
 Notifications.setNotificationHandler({
 	handleNotification: async () => ({
@@ -37,6 +38,7 @@ export default function App() {
 		<PushContext.Provider value={[pushToken, setPushToken]}>
 			<AuthContext.Provider value={[auth, setAuth]}>
 				<NavigationContainer>
+					<StatusBar style="dark"></StatusBar>
 					<Drawer.Navigator>{getAuthNavigator(auth, pushToken)}</Drawer.Navigator>
 				</NavigationContainer>
 			</AuthContext.Provider>
