@@ -1,11 +1,17 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FlatList, ScrollView, Text, View } from "react-native";
 import { Calendar } from "react-native-big-calendar";
 import { useFocusEffect } from "@react-navigation/native";
 import { useApi } from "../../api/useApi";
 
-export default function StudentCalendarScreen() {
-	const [events, setEvents] = useState();
+export default function StudentEventsScreen() {
+	const [events, setEvents] = useState([
+		{
+			title: "",
+			start: new Date(2024, 3, 23, 7, 30),
+			end: new Date(2024, 3, 23, 7, 30),
+		},
+	]);
 	const api = useApi();
 	async function getEvents() {
 		const res = (await api.get("/events")).data;
@@ -21,5 +27,10 @@ export default function StudentCalendarScreen() {
 			getEvents();
 		}, [])
 	);
-	return <View>{events && <Calendar events={events} height={800} mode="3days" swipeEnabled={false} scrollOffsetMinutes={420} />}</View>;
+
+	return (
+		<View>
+			<Calendar events={events} height={800} mode="schedule" />
+		</View>
+	);
 }

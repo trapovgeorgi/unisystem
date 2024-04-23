@@ -9,6 +9,11 @@ class Discipline extends Model
 {
     protected $guarded = [];
     protected $fillable = ["id","name", "semester", "specialty_id"];
+
+    public function specialty()
+    {
+        return $this->belongsTo(Specialty::class);
+    }
     
     use HasFactory;
 }

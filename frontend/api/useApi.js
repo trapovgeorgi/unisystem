@@ -1,12 +1,18 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
+import * as Device from 'expo-device';
+
 
 export function useApi() {
 	const [auth, setAuth] = useContext(AuthContext);
-
 	const api = axios.create({
-		baseURL: "http://192.168.123.109:8000",
+		//baseURL: "https://hristo.trapov.pro/",
+		baseURL: "http://192.168.236.82:8000",
+		headers:{
+			"User-Agent": Device.deviceName
+		}
+		
 	});
 
 	api.interceptors.request.use(

@@ -1,17 +1,19 @@
 <?php
 
 use App\Models\Discipline;
+use App\Models\Dorm;
+use App\Models\Event;
 use App\Models\Faculty;
 use App\Models\Grade;
+use App\Models\GrantRequest;
 use App\Models\Group;
+use App\Models\Insurance;
 use App\Models\Specialty;
 use App\Models\User;
 use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
-
-
 
 Route::post('/login', function (Request $request) {
     Log::debug("Facnum: " . $request->facnum);
@@ -43,6 +45,39 @@ Route::get('/authlogin/{token}', function (Request $request, $token) {
 
 //AUTH MIDDLEWARE
 Route::middleware('auth:api')->group(function () {
+
+    Route::get("/events", function (Request $request) {
+        return Event::all();
+    });
+    Route::get("/insurances", function (Request $request) {
+        return Insurance::all();
+    });
+
+    Route::get("/student/grant", function (Request $request) {
+        return GrantRequest::where("student_id", $request->user()->id)->first();
+    });
+
+    Route::post("/student/grant", function (Request $request) {
+        return GrantRequest::create([
+            "point" => $request->point,
+            "student_id" => $request->user()->id
+        ]);
+    });
+
+    Route::get("/student/dorm", function (Request $request) {
+        return Dorm::where("student_id", $request->user()->id)->first();
+    });
+
+    Route::post("/student/dorm", function (Request $request) {
+        $dorm = Dorm::where("id", $request->dorm_id)->first(); 
+        $dorm->student_id = $request->user()->id;
+        return $dorm->save();;
+    });
+
+    Route::get("/student/dorms", function (Request $request) {
+        return Dorm::whereNull("student_id")->get();
+    });
+
     Route::get("/student/grades", function (Request $request) {
         $semesters = [];
         for ($i = 1; $i < $request->user()->semester + 1; $i++) {

@@ -20,5 +20,20 @@ class User extends Model
         return $this->hasMany(Grade::class, "teacher_id");
     }
 
+    public function dorm()
+    {
+        return $this->hasOne(Dorm::class);
+    }
+
+    public function group()
+    {
+        return $this->hasOne(Group::class);
+    }
+
+    public function sport()
+    {
+        return $this->belongsToMany(Sport::class, StudentSport::class, "student_id");
+    }
+
     use HasFactory;
 }

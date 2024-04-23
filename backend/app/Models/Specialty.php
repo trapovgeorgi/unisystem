@@ -10,6 +10,14 @@ class Specialty extends Model
     protected $guarded = [];
     protected $fillable = ["id","name", "faculty_id"];
 
+    public function disciplines()
+    {
+        return $this->hasMany(Discipline::class);
+    }
 
+    public function faculty()
+    {
+        return $this->belongsTo(Faculty::class);
+    }
     use HasFactory;
 }

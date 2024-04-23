@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Text, View, StyleSheet, ScrollView } from "react-native";
 import { useApi } from "../../api/useApi";
 import { useFocusEffect } from "@react-navigation/native";
+import { primaryColor } from "../../helpers/colors";
 
 export default function StudentGradesScreen() {
 	const [semesters, setSemesters] = useState([]);
@@ -81,8 +82,8 @@ const styles = StyleSheet.create({
 		marginBottom: 10,
 	},
 	infoBall: {
-		backgroundColor: "#3352A8",
-		borderColor: "#3352A8",
+		backgroundColor: primaryColor,
+		borderColor: primaryColor,
 		height: 20,
 		width: 20,
 		borderStyle: "solid",

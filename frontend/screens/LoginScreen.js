@@ -7,6 +7,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { PushContext } from "../context/PushContext";
 import { useApi } from "../api/useApi";
+import { primaryColor } from "../helpers/colors";
 
 const tuLogo = require("../assets/TUSlogosimple.png");
 
@@ -72,7 +73,7 @@ export default function LoginScreen(props) {
 			<Image source={tuLogo} style={styles.img}></Image>
 			<Input title={"Име"} onChangeText={(t) => setFacnum(t)} defaultValue={facnum} />
 			<Input title={"Парола"} onChangeText={(t) => setEgn(t)} defaultValue={egn} secureTextEntry />
-			<Button title="Вход" color={"#3352A8"} onPress={login} />
+			<Button title="Вход" color={primaryColor} onPress={login} />
 			{savedToken && <Button title="Удостоверен Вход" color={"#444"} onPress={authLogin} />}
 		</View>
 	);

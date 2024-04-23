@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Image, Text, View, StyleSheet, ImageBackground, ScrollView } from "react-native";
 import { AuthContext } from "../context/AuthContext";
 import { useApi } from "../api/useApi";
+import { primaryColor } from "../helpers/colors";
 
 const tuLogo = require("../assets/TUSlogosimple.png");
 
@@ -86,8 +87,8 @@ const styles = StyleSheet.create({
 		gap: 4,
 	},
 	infoBall: {
-		backgroundColor: "#3352A8",
-		borderColor: "#3352A8",
+		backgroundColor:primaryColor,
+		borderColor: primaryColor,
 		height: 20,
 		width: 20,
 		borderStyle: "solid",

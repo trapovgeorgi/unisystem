@@ -6,16 +6,29 @@ grades (teacher, student, specialty)
 discipline (specialty)
 teachers_disciplines
 
-php artisan make:model Student -cmsr
+php artisan make:model User -cmsr
 php artisan make:model Faculty -cmsr
 php artisan make:model Specialty -cmsr
-php artisan make:model Teacher -cmsr
 php artisan make:model Grade -cmsr
 php artisan make:model Discipline -cmsr
 php artisan make:model Group -cmsr
 php artisan make:model Stream -cmsr
 
+php artisan make:model Event -cmsr
+php artisan make:model Insurance -cmsr
+php artisan make:model Sport -cmsr
+php artisan make:model Dorm -cmsr
+php artisan make:model GrantRequest -cmsr
 
+
+
+php artisan make:seeder UserSeeder
+php artisan make:seeder FacultySeeder
+php artisan make:seeder SpecialtySeeder
+php artisan make:seeder GradeSeeder
+php artisan make:seeder DisciplineSeeder
+php artisan make:seeder GroupSeeder
+php artisan make:seeder StreamSeeder
 //remigrate
 php artisan migrate:fresh
 
