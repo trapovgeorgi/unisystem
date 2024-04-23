@@ -13,7 +13,6 @@ export default function StudentCalendarScreen() {
 			ev.start = new Date(ev.start);
 			ev.end = new Date(ev.end);
 		}
-		console.log(res);
 		setEvents(res);
 	}
 	useFocusEffect(

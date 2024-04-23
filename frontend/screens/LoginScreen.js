@@ -28,7 +28,6 @@ export default function LoginScreen(props) {
 			const auth = await LocalAuthentication.authenticateAsync();
 			if (auth.success) {
 				let user = (await api.get(`/authlogin/${savedToken}`)).data;
-				console.log(user);
 				if (!user) throw new Error();
 				setAuth(user);
 			}

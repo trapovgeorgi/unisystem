@@ -14,8 +14,6 @@ export default function StudentGrantScreen() {
 	const api = useApi();
 	async function getGrant() {
 		const res = (await api.get("/student/grant")).data;
-		console.log("ALE");
-		console.log(res);
 		setGrant(res);
 	}
 

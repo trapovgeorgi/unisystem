@@ -19,7 +19,6 @@ export default function StudentSportScreen() {
 	}
 	async function getSport() {
 		const res = (await api.get("/student/sport")).data;
-		console.log(res);
 		setSport(res);
 	}
 
