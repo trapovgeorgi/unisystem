@@ -15,8 +15,8 @@ export default function LoginScreen(props) {
 	const [, setAuth] = useContext(AuthContext);
 	const [pushToken] = useContext(PushContext);
 
-	//const [facnum, setFacnum] = useState("121221000");
-	const [facnum, setFacnum] = useState("000000001");
+	const [facnum, setFacnum] = useState("121221000");
+	//const [facnum, setFacnum] = useState("000000001");
 	const [egn, setEgn] = useState("0000000000");
 	const [savedToken, setSavedToken] = useState(false);
 	const [error, setError] = useState(null);

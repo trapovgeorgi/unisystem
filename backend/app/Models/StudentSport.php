@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class StudentSport extends Model
 {
+    protected $guarded = [];
     protected $table = 'student_sport';
 
     public function student()

@@ -9,6 +9,8 @@ use App\Models\GrantRequest;
 use App\Models\Group;
 use App\Models\Insurance;
 use App\Models\Specialty;
+use App\Models\Sport;
+use App\Models\StudentSport;
 use App\Models\User;
 use App\Services\NotificationService;
 use Illuminate\Http\Request;
@@ -69,9 +71,33 @@ Route::middleware('auth:api')->group(function () {
     });
 
     Route::post("/student/dorm", function (Request $request) {
-        $dorm = Dorm::where("id", $request->dorm_id)->first(); 
+        $dorm = Dorm::where("id", $request->dorm_id)->first();
         $dorm->student_id = $request->user()->id;
         return $dorm->save();;
+    });
+
+    Route::get("/sports", function (Request $request) {
+        return Sport::all();
+    });
+
+    Route::post("/teacher/sport", function (Request $request) {
+        return Sport::create([
+            "name" => $request->name,
+            "teacher_id" => $request->user()->id,
+            "quantity" => 10
+        ]);
+    });
+
+    Route::post("/student/sport", function (Request $request) {
+        return StudentSport::create([
+            "student_id" => $request->user()->id,
+            "sport_id" => $request->sport["id"]
+        ]);
+    });
+    Route::get("/student/sport", function (Request $request) {
+        $sport = $request->user()->sport->first();
+        $sport->teacher;
+        return $sport;
     });
 
     Route::get("/student/dorms", function (Request $request) {
