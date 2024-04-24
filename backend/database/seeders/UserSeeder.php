@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
             "api_token" => Str::random(80),
             "name" => "Иван Иванов",
             "role" => "student",
-            "facnum" => "121221000",
+            "facnum" => "121221001",
             "egn" => "0000000000",
             "mail" => "iivanov@tu-sofia.bg",
             "semester" => "6",
@@ -38,6 +38,15 @@ class UserSeeder extends Seeder
             "facnum" => "000000001",
             "egn" => "0000000000",
             "mail" => "ppetrov@tu-sofia.bg",
+        ]);
+        User::create([
+            "id" => 3,
+            "api_token" => Str::random(80),
+            "name" => "Стефка Стефкова",
+            "role" => "office",
+            "facnum" => "111111111",
+            "egn" => "0000000000",
+            "mail" => "sstefkova@tu-sofia.bg",
         ]);
     }
 }

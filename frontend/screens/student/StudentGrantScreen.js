@@ -4,7 +4,7 @@ import { Calendar } from "react-native-big-calendar";
 import { Picker } from "@react-native-picker/picker";
 import { primaryColor } from "../../helpers/colors";
 import { useApi } from "../../api/useApi";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 export default function StudentGrantScreen() {
 	const [reload, setReload] = useState(true)
@@ -13,6 +13,9 @@ export default function StudentGrantScreen() {
 	const [grant, setGrant] = useState();
 
 	const api = useApi();
+	const navigation = useNavigation();
+
+
 	async function getGrant() {
 		const res = (await api.get("/student/grant")).data;
 		setGrant(res);
@@ -39,6 +42,7 @@ export default function StudentGrantScreen() {
 			point,
 		});
 		setReload(!reload);
+		navigation.navigate("Profile")
 	}
 
 	useFocusEffect(

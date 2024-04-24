@@ -15,6 +15,7 @@ import StudentEventsScreen from "../screens/student/StudentEventsScreen";
 
 import { primaryColor } from "../helpers/colors";
 import TeacherSportScreen from "../screens/teacher/TeacherSportScreen";
+import OfficeEventAddScreen from "../screens/office/OfficeEventAddScreen";
 
 const Drawer = createDrawerNavigator();
 const navStyles = {
@@ -146,6 +147,44 @@ export function getAuthNavigator(auth, pushToken) {
 						component={TeacherSportScreen}
 						options={{
 							title: "Спорт",
+							...navStyles,
+						}}
+					/>
+					<Drawer.Screen
+						name="Logout"
+						component={LogoutScreen}
+						options={{
+							title: "Изход",
+							...navStyles,
+						}}
+					/>
+				</>
+			);
+		}
+		if (auth.role == "office") {
+			return (
+				<>
+					<Drawer.Screen
+						name="Profile"
+						component={ProfileScreen}
+						options={{
+							title: "Профил",
+							...navStyles,
+						}}
+					/>
+					<Drawer.Screen
+						name="Events"
+						component={StudentEventsScreen}
+						options={{
+							title: "Събития",
+							...navStyles,
+						}}
+					/>
+					<Drawer.Screen
+						name="AddEvent"
+						component={OfficeEventAddScreen}
+						options={{
+							title: "Добави Събитие",
 							...navStyles,
 						}}
 					/>

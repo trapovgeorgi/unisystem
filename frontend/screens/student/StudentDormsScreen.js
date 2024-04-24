@@ -5,7 +5,7 @@ import { Picker } from "@react-native-picker/picker";
 import { primaryColor } from "../../helpers/colors";
 
 import { useApi } from "../../api/useApi";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 export default function StudentDormsScreen() {
 	const [reload, setReload] = useState(true)
@@ -14,6 +14,8 @@ export default function StudentDormsScreen() {
 	const [dorm, setDorm] = useState();
 
 	const api = useApi();
+	const navigation = useNavigation();
+
 
 	async function getDorm() {
 		const res = (await api.get("/student/dorm")).data;
@@ -31,6 +33,7 @@ export default function StudentDormsScreen() {
 			dorm_id: selectedDorm,
 		});
 		setReload(!reload);
+		navigation.navigate("Profile")
 	}
 
 	useFocusEffect(

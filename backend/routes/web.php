@@ -3,6 +3,7 @@
 use App\Http\Controllers\DisciplineController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\InsuranceController;
+use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\SportController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
@@ -35,6 +36,9 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/teacher/sport', [TeacherController::class, "sport"]);
     Route::get('/teacher/students', [TeacherController::class, "students"]);
     Route::post('/teacher/grade', [TeacherController::class, "grade"]);
+
+    Route::post('/office/event', [OfficeController::class, "event"]);
+    Route::delete('/office/event/{id}', [OfficeController::class, "deleteEvent"]);
 
     Route::get('/profile', [UserController::class, "profile"]);
 });

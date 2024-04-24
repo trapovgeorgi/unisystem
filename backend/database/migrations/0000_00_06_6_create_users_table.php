@@ -33,7 +33,7 @@ class CreateUsersTable extends Migration
             $table->enum("eqd", ["Бакалавър", "Магистър", "Доктор"])->nullable();
             $table->enum("eqd_type", ["Редовно", "Задочно"])->nullable();
             $table->enum("state", ["Действащ", "Прекъснал"])->nullable();
-            $table->enum("role", ["student", "teacher"])->nullable();
+            $table->enum("role", ["student", "teacher", "office"])->nullable();
 
             $table->foreignId('group_id')
                 ->nullable()

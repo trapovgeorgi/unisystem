@@ -2,19 +2,19 @@ import React, { useCallback, useState } from "react";
 import { Button, FlatList, ScrollView, Text, View } from "react-native";
 import { Calendar } from "react-native-big-calendar";
 import { useApi } from "../../api/useApi";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { primaryColor } from "../../helpers/colors";
 import Input from "../../components/form/Input";
 import { Picker } from "@react-native-picker/picker";
 
 export default function StudentSportScreen() {
-	const [reload, setReload] = useState(true)
+	const [reload, setReload] = useState(true);
 	const [selectedSport, setSelectedSport] = useState();
 	const [sports, setSports] = useState();
 	const [sport, setSport] = useState();
 
 	const api = useApi();
-	
+	const navigation = useNavigation();
 	async function getSport() {
 		const res = (await api.get("/student/sport")).data;
 		setSport(res);
@@ -29,6 +29,7 @@ export default function StudentSportScreen() {
 	async function handlePress() {
 		await api.post("/student/sport", { sport: selectedSport });
 		setReload(!reload);
+		navigation.navigate("Profile");
 	}
 
 	useFocusEffect(
@@ -42,7 +43,9 @@ export default function StudentSportScreen() {
 		<View>
 			{sport ? (
 				<View style={{ padding: 20, gap: 8 }}>
-					<Text>Вече сте записан на спорт: {sport.name} с ръководител: {sport.teacher.name}</Text>
+					<Text>
+						Вече сте записан на спорт: {sport.name} с ръководител: {sport.teacher.name}
+					</Text>
 				</View>
 			) : (
 				<View style={{ padding: 20, gap: 8 }}>
