@@ -1,157 +1,40 @@
 <?php
 
-use App\Models\Discipline;
-use App\Models\Dorm;
-use App\Models\Event;
-use App\Models\Faculty;
-use App\Models\Grade;
-use App\Models\GrantRequest;
-use App\Models\Group;
-use App\Models\Insurance;
-use App\Models\Specialty;
-use App\Models\Sport;
-use App\Models\StudentSport;
-use App\Models\User;
-use App\Services\NotificationService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\DisciplineController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\InsuranceController;
+use App\Http\Controllers\SportController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/login', function (Request $request) {
-    Log::debug("Facnum: " . $request->facnum);
-    Log::debug("Egn: " . $request->egn);
-
-    $user = User::where("facnum", $request->facnum)->where("egn", $request->egn)->first();
-
-    if ($user != null) {
-        Log::debug("User Found");
-    } else {
-        Log::debug("! User NOT Found !");
-        return false;
-    }
-
-    Log::debug("LOGGED IN");
-    Log::debug("LOGGED IN WITH PUSH TOKEN: " . $request->pushToken);
-
-    if (strlen($request->pushToken) != 0) {
-        $user->push_token = $request->pushToken;
-        $user->save();
-    }
-
-    return $user;
-});
-
-Route::get('/authlogin/{token}', function (Request $request, $token) {
-    return User::where("api_token", $token)->first();
-});
+Route::post('/login', [UserController::class, "login"]);
+Route::get('/authlogin/{token}', [UserController::class, "authlogin"]);
 
 //AUTH MIDDLEWARE
 Route::middleware('auth:api')->group(function () {
 
-    Route::get("/events", function (Request $request) {
-        return Event::all();
-    });
-    Route::get("/insurances", function (Request $request) {
-        return Insurance::all();
-    });
+    Route::get('/events', [EventController::class, "events"]);
+    Route::get('/insurances', [InsuranceController::class, "insurances"]);
+    Route::get('/sports', [SportController::class, "sports"]);
+    Route::get('/disciplines', [DisciplineController::class, "disciplines"]);
 
-    Route::get("/student/grant", function (Request $request) {
-        return GrantRequest::where("student_id", $request->user()->id)->first();
-    });
+    Route::get('/student/grant', [StudentController::class, "getGrant"]);
+    Route::post('/student/grant', [StudentController::class, "setGrant"]);
 
-    Route::post("/student/grant", function (Request $request) {
-        return GrantRequest::create([
-            "point" => $request->point,
-            "student_id" => $request->user()->id
-        ]);
-    });
+    Route::get('/student/dorms', [StudentController::class, "getDorms"]);
+    Route::get('/student/dorm', [StudentController::class, "getDorm"]);
+    Route::post('/student/dorm', [StudentController::class, "setDorm"]);
 
-    Route::get("/student/dorm", function (Request $request) {
-        return Dorm::where("student_id", $request->user()->id)->first();
-    });
+    Route::get('/student/sport', [StudentController::class, "getSport"]);
+    Route::post('/student/sport', [StudentController::class, "setSport"]);
 
-    Route::post("/student/dorm", function (Request $request) {
-        $dorm = Dorm::where("id", $request->dorm_id)->first();
-        $dorm->student_id = $request->user()->id;
-        return $dorm->save();;
-    });
+    Route::get('/student/grades', [StudentController::class, "grades"]);
 
-    Route::get("/sports", function (Request $request) {
-        return Sport::all();
-    });
+    Route::post('/teacher/sport', [TeacherController::class, "sport"]);
+    Route::get('/teacher/students', [TeacherController::class, "students"]);
+    Route::post('/teacher/grade', [TeacherController::class, "grade"]);
 
-    Route::post("/teacher/sport", function (Request $request) {
-        return Sport::create([
-            "name" => $request->name,
-            "teacher_id" => $request->user()->id,
-            "quantity" => 10
-        ]);
-    });
-
-    Route::post("/student/sport", function (Request $request) {
-        return StudentSport::create([
-            "student_id" => $request->user()->id,
-            "sport_id" => $request->sport["id"]
-        ]);
-    });
-    Route::get("/student/sport", function (Request $request) {
-        $sport = $request->user()->sport->first();
-        $sport->teacher;
-        return $sport;
-    });
-
-    Route::get("/student/dorms", function (Request $request) {
-        return Dorm::whereNull("student_id")->get();
-    });
-
-    Route::get("/student/grades", function (Request $request) {
-        $semesters = [];
-        for ($i = 1; $i < $request->user()->semester + 1; $i++) {
-            $grades = Grade::where("student_id", $request->user()->id)->get();
-            $grades_f = [];
-            foreach ($grades as $grade) {
-                $grade->teacher;
-                if ($grade->discipline->semester == $i) {
-                    $grades_f[] = $grade;
-                }
-            }
-            $semesters[] = $grades_f;
-        }
-        return $semesters;
-    });
-
-    Route::get("/disciplines", function (Request $request) {
-        return Discipline::all();
-    });
-    Route::get("/teacher/students", function (Request $request) {
-        return User::where("role", "student")->get();
-    });
-
-    Route::post("/teacher/grade", function (Request $request) {
-        $grade = Grade::create([
-            "grade" => $request->grade,
-            "verified" => $request->verified,
-            "student_id" => $request->student_id,
-            "teacher_id" => $request->user()->id,
-            "discipline_id" => $request->discipline_id
-        ]);
-
-        $discipline = Discipline::where("id", $grade->discipline_id)->first();
-
-        $title = "Нова Оценка по " . $discipline->name;
-        $body = "Oценка: " . $grade->grade;
-        NotificationService::sendPushNotification($grade->student->push_token, $title, $body);
-    });
-
-    Route::get('/profile', function (Request $request) {
-        $user = $request->user();
-
-        if ($user->role == "student") {
-            $user->group = Group::where("id", $user->group_id)->first();
-            $user->group->specialty = Specialty::where("id", $user->group->specialty_id)->first();
-            $user->group->specialty->faculty = Faculty::where("id", $user->group->specialty->faculty_id)->first();
-        }
-
-        return $user;
-    });
+    Route::get('/profile', [UserController::class, "profile"]);
 });

@@ -54,21 +54,6 @@ class GradeSeeder extends Seeder
             "teacher_id" => 2,
             "discipline_id" => 5,
         ]);
-        Grade::create([
-            "id" => 6,
-            "grade" => 6,
-            "verified" => true,
-            "student_id" => 1,
-            "teacher_id" => 2,
-            "discipline_id" => 6,
-        ]);
-        Grade::create([
-            "id" => 7,
-            "grade" => 5,
-            "verified" => false,
-            "student_id" => 1,
-            "teacher_id" => 2,
-            "discipline_id" => 7,
-        ]);
+      
     }
 }
