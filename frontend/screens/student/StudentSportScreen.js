@@ -8,15 +8,13 @@ import Input from "../../components/form/Input";
 import { Picker } from "@react-native-picker/picker";
 
 export default function StudentSportScreen() {
+	const [reload, setReload] = useState(true)
 	const [selectedSport, setSelectedSport] = useState();
 	const [sports, setSports] = useState();
 	const [sport, setSport] = useState();
 
 	const api = useApi();
-
-	async function handlePress() {
-		await api.post("/student/sport", { sport: selectedSport });
-	}
+	
 	async function getSport() {
 		const res = (await api.get("/student/sport")).data;
 		setSport(res);
@@ -28,11 +26,16 @@ export default function StudentSportScreen() {
 		setSelectedSport(res[0]);
 	}
 
+	async function handlePress() {
+		await api.post("/student/sport", { sport: selectedSport });
+		setReload(!reload);
+	}
+
 	useFocusEffect(
 		useCallback(() => {
 			getSports();
 			getSport();
-		}, [])
+		}, [reload])
 	);
 
 	return (

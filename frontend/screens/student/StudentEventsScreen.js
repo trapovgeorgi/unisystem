@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { FlatList, ScrollView, Text, View } from "react-native";
+import React, { useCallback, useState } from "react";
+import { View } from "react-native";
 import { Calendar } from "react-native-big-calendar";
 import { useFocusEffect } from "@react-navigation/native";
 import { useApi } from "../../api/useApi";

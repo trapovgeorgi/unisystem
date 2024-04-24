@@ -1,8 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { Image, Text, View, StyleSheet, ImageBackground, ScrollView } from "react-native";
 import { AuthContext } from "../context/AuthContext";
 import { useApi } from "../api/useApi";
 import { primaryColor } from "../helpers/colors";
+import { useFocusEffect } from "@react-navigation/native";
 
 const tuLogo = require("../assets/TUSlogosimple.png");
 
@@ -19,9 +20,12 @@ export default function ProfileScreen() {
 			console.error(error);
 		}
 	}
-	useEffect(() => {
-		getData();
-	}, []);
+
+	useFocusEffect(
+		useCallback(() => {
+			getData();
+		}, [])
+	);
 
 	function existRender(text, key) {
 		if (key) {
@@ -87,7 +91,7 @@ const styles = StyleSheet.create({
 		gap: 4,
 	},
 	infoBall: {
-		backgroundColor:primaryColor,
+		backgroundColor: primaryColor,
 		borderColor: primaryColor,
 		height: 20,
 		width: 20,

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Text, View, StyleSheet, ScrollView } from "react-native";
 import { useApi } from "../../api/useApi";
 import { useFocusEffect } from "@react-navigation/native";
@@ -25,9 +25,11 @@ export default function StudentGradesScreen() {
 		setAverageGrade((gradeSum / gradeNum).toFixed(2));
 		setSemesters(data);
 	}
+	
 	useFocusEffect(useCallback(() => {
 		getGrades();
 	}, []));
+
 	return (
 		<ScrollView>
 			<View style={{ display: "flex", justifyContent: "center", alignItems: "center", height: 100 }}>

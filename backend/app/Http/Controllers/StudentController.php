@@ -30,11 +30,11 @@ class StudentController extends Controller
     }
     public function getDorm(Request $request)
     {
-        NotificationService::sendPushNotification($request->user()->push_token, "Общежития", "Успешно кандидатстване");
         return Dorm::where("student_id", $request->user()->id)->first();
     }
     public function setDorm(Request $request)
     {
+        NotificationService::sendPushNotification($request->user()->push_token, "Общежития", "Успешно кандидатстване");
         $dorm = Dorm::where("id", $request->dorm_id)->first();
         $dorm->student_id = $request->user()->id;
         return $dorm->save();;

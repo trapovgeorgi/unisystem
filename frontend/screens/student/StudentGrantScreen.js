@@ -7,6 +7,7 @@ import { useApi } from "../../api/useApi";
 import { useFocusEffect } from "@react-navigation/native";
 
 export default function StudentGrantScreen() {
+	const [reload, setReload] = useState(true)
 	const [point, setPoint] = useState(3);
 	const [averageGrade, setAverageGrade] = useState(0);
 	const [grant, setGrant] = useState();
@@ -37,15 +38,16 @@ export default function StudentGrantScreen() {
 		api.post("/student/grant", {
 			point,
 		});
-		setGrant({ point });
+		setReload(!reload);
 	}
 
 	useFocusEffect(
 		useCallback(() => {
 			getGrant();
 			getGrades();
-		}, [])
+		}, [reload])
 	);
+
 	return (
 		<View>
 			<View style={{ padding: 20 }}>

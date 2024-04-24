@@ -1,4 +1,3 @@
-import CheckBox from "expo-checkbox";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as LocalAuthentication from "expo-local-authentication";
 import { Button, StyleSheet, Text, Image, View } from "react-native";
@@ -32,13 +31,15 @@ export default function LoginScreen(props) {
 				setAuth(user);
 			}
 		} catch (error) {
-			await AsyncStorage.clear()
-			setSavedToken(false)
+			await AsyncStorage.clear();
+			setSavedToken(false);
 			console.error(error);
 			return;
 		}
 	}
 	async function login() {
+		if (!checkInput()) return;
+
 		let user = {};
 		try {
 			user = (await api.post("/login", { facnum, egn, pushToken })).data;
@@ -59,6 +60,21 @@ export default function LoginScreen(props) {
 
 	async function checkSavedToken() {
 		setSavedToken(await AsyncStorage.getItem("token"));
+	}
+
+	function checkInput() {
+		let isOk = true;
+		if (facnum.length != 9) {
+			setError("Факултетния номер трябва да е от 9 цифри");
+			isOk = false;
+		} else if (egn.length != 10) {
+			setError("ЕГН трябва да е от 10 цифри");
+			isOk = false;
+		} else {
+			setError("");
+			isOk = true;
+		}
+		return isOk;
 	}
 
 	useEffect(() => {}, [pushToken]);

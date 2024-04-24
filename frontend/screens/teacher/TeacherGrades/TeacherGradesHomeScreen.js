@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Button, View } from "react-native";
 import { useApi } from "../../../api/useApi";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { primaryColor } from "../../../helpers/colors";
 
 export default function TeacherGradesHomeScreen() {
 	const api = useApi();
@@ -18,14 +19,16 @@ export default function TeacherGradesHomeScreen() {
 		navigation.navigate("Discipline", { discipline });
 	}
 
-	useEffect(() => {
-		getDisciplines();
-	}, []);
+	useFocusEffect(
+		useCallback(() => {
+			getDisciplines();
+		}, [])
+	);
 
 	return (
 		<View style={{ padding: 10, display: "flex", gap: 10 }}>
 			{disciplines?.map((discipline, index) => (
-				<Button key={`discipline-${index}`} title={discipline.name} onPress={() => routeToDiscipline(discipline)}></Button>
+				<Button key={`discipline-${index}`} color={primaryColor} title={discipline.name} onPress={() => routeToDiscipline(discipline)}></Button>
 			))}
 		</View>
 	);

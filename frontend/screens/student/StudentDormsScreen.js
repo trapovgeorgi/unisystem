@@ -8,6 +8,7 @@ import { useApi } from "../../api/useApi";
 import { useFocusEffect } from "@react-navigation/native";
 
 export default function StudentDormsScreen() {
+	const [reload, setReload] = useState(true)
 	const [selectedDorm, setSelectedDorm] = useState();
 	const [dorms, setDorms] = useState();
 	const [dorm, setDorm] = useState();
@@ -29,13 +30,14 @@ export default function StudentDormsScreen() {
 		api.post("/student/dorm", {
 			dorm_id: selectedDorm,
 		});
+		setReload(!reload);
 	}
 
 	useFocusEffect(
 		useCallback(() => {
 			getDorm();
 			getDorms();
-		}, [])
+		}, [reload])
 	);
 
 	return (
