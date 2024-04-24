@@ -97,7 +97,7 @@ export default function OfficeEventAddScreen() {
 				<Button color={primaryColor} onPress={handleAdd} title="Добави" />
 				<View style={{ marginTop: 40, display: "flex", justifyContent: "center", alignItems: "center", gap: 8 }}>
 					{events?.map((ev, index) => (
-						<View style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 8, flexDirection: "row" }}>
+						<View key={`event-${index}`} style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 8, flexDirection: "row" }}>
 							<View key={`event-${index}`} style={{ width: 140, height: 50, backgroundColor: primaryColor, padding: 4 }}>
 								<Text style={{ color: "#fff", textAlign: "center", textAlignVertical: "center" }}>{ev.title}</Text>
 							</View>
