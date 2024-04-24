@@ -143,6 +143,22 @@ export function getAuthNavigator(auth, pushToken) {
 						}}
 					/>
 					<Drawer.Screen
+						name="Calendar"
+						component={StudentCalendarScreen}
+						options={{
+							title: "Календар",
+							...navStyles,
+						}}
+					/>
+					<Drawer.Screen
+						name="Events"
+						component={StudentEventsScreen}
+						options={{
+							title: "Събития",
+							...navStyles,
+						}}
+					/>
+					<Drawer.Screen
 						name="Sport"
 						component={TeacherSportScreen}
 						options={{
@@ -169,6 +185,14 @@ export function getAuthNavigator(auth, pushToken) {
 						component={ProfileScreen}
 						options={{
 							title: "Профил",
+							...navStyles,
+						}}
+					/>
+					<Drawer.Screen
+						name="Calendar"
+						component={StudentCalendarScreen}
+						options={{
+							title: "Календар",
 							...navStyles,
 						}}
 					/>

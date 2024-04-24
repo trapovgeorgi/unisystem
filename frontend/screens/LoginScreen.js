@@ -15,10 +15,13 @@ export default function LoginScreen(props) {
 	const [pushToken] = useContext(PushContext);
 
 	//const [facnum, setFacnum] = useState("121221001");
-	const [facnum, setFacnum] = useState("111111111");
+	//const [facnum, setFacnum] = useState("111111111");
 	//const [facnum, setFacnum] = useState("000000001");
+	const [facnum, setFacnum] = useState("");
 	
-	const [egn, setEgn] = useState("0000000000");
+	//const [egn, setEgn] = useState("0000000000");
+	const [egn, setEgn] = useState("");
+	
 	const [savedToken, setSavedToken] = useState(false);
 	const [error, setError] = useState(null);
 
@@ -88,8 +91,8 @@ export default function LoginScreen(props) {
 		<View style={styles.container}>
 			{error ? <Text style={{ color: "red" }}>{error}</Text> : <></>}
 			<Image source={tuLogo} style={styles.img}></Image>
-			<Input title={"Име"} onChangeText={(t) => setFacnum(t)} defaultValue={facnum} />
-			<Input title={"Парола"} onChangeText={(t) => setEgn(t)} defaultValue={egn} secureTextEntry />
+			<Input title={"Факултетен номер"} onChangeText={(t) => setFacnum(t)} defaultValue={facnum} />
+			<Input title={"ЕГН"} onChangeText={(t) => setEgn(t)} defaultValue={egn} secureTextEntry />
 			<Button title="Вход" color={primaryColor} onPress={login} />
 			{savedToken && <Button title="Удостоверен Вход" color={"#444"} onPress={authLogin} />}
 		</View>
